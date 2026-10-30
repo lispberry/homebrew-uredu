@@ -22,7 +22,7 @@ jobs:
             echo "::notice::lispberry/proven has no release with a formula yet"
             exit 0
           }
-          if git diff --quiet -- Formula; then
+          if [ -z "$(git status --porcelain -- Formula)" ]; then
             echo "Formula is up to date"
             exit 0
           fi
