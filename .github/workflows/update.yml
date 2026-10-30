@@ -1,5 +1,5 @@
-# Pulls the formula attached to the latest lispberry/proven release into Formula/proven.rb.
-# Runs hourly, on demand, and when lispberry/proven's release workflow dispatches it.
+# Pulls the formula attached to the latest lispberry/uredu release into Formula/uredu.rb.
+# Runs hourly, on demand, and when lispberry/uredu's release workflow dispatches it.
 name: update
 
 on:
@@ -18,17 +18,17 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download --repo lispberry/proven --pattern proven.rb --dir Formula --clobber || {
-            echo "::notice::lispberry/proven has no release with a formula yet"
+          gh release download --repo lispberry/uredu --pattern uredu.rb --dir Formula --clobber || {
+            echo "::notice::lispberry/uredu has no release with a formula yet"
             exit 0
           }
           if [ -z "$(git status --porcelain -- Formula)" ]; then
             echo "Formula is up to date"
             exit 0
           fi
-          version=$(sed -n 's/^  version "\(.*\)"$/\1/p' Formula/proven.rb)
+          version=$(sed -n 's/^  version "\(.*\)"$/\1/p' Formula/uredu.rb)
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Formula/proven.rb
-          git commit -m "proven $version"
+          git add Formula/uredu.rb
+          git commit -m "uredu $version"
           git push
